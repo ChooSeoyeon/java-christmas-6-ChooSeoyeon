@@ -32,7 +32,7 @@ public class OrderTest {
                 .map(OrderMenu::new)
                 .toList();
 
-        assertThat(order.getOrderMenus().toString()).isEqualTo(emptyOrderMenus.toString());
+        assertThat(order.listAllMenus().toString()).isEqualTo(emptyOrderMenus.toString());
     }
 
     @ParameterizedTest
@@ -44,7 +44,7 @@ public class OrderTest {
         order.markMenusBy(defaultOrderRequests);
 
         String expectedResult = String.format("%s %d개", menu.getName(), expectedQuantity);
-        assertThat(order.getOrderMenus())
+        assertThat(order.listAllMenus())
                 .anyMatch(orderMenu -> orderMenu.toString().equals(expectedResult));
     }
 
@@ -56,8 +56,10 @@ public class OrderTest {
         OrderResult orderResult = order.createOrderResult();
 
         int expectedTotalPrice = Menu.MUSHROOM_SOUP.getPrice() * 2 + Menu.BBQ_RIBS.getPrice() * 3;
-        assertThat(orderResult.orderTotalPrice()).isEqualTo(expectedTotalPrice);
-        assertThat(orderResult.orderMenus()).containsExactlyInAnyOrderElementsOf(order.getOrderMenus());
+        assertThat(orderResult.orderMenus())
+                .containsExactlyInAnyOrderElementsOf(order.extractActiveOrderMenus());
+        assertThat(orderResult.orderTotalPrice())
+                .isEqualTo(expectedTotalPrice);
     }
 
     @Test

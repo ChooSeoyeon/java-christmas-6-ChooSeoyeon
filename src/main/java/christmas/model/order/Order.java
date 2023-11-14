@@ -26,8 +26,14 @@ public class Order {
         return OrderResult.create(this);
     }
 
-    public List<OrderMenu> getOrderMenus() {
-        return Collections.unmodifiableList(orderMenus); // TODO : count 0이 아닌 경우만 반환하게 수정 필요
+    public List<OrderMenu> listAllMenus() {
+        return Collections.unmodifiableList(orderMenus);
+    }
+
+    public List<OrderMenu> extractActiveOrderMenus() {
+        return orderMenus.stream()
+                .filter(OrderMenu::active)
+                .collect(Collectors.toList());
     }
 
     public int sumTotalPrice() {

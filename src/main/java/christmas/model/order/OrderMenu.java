@@ -3,12 +3,17 @@ package christmas.model.order;
 import java.util.Objects;
 
 public class OrderMenu {
+    private static final int ACTIVE_QUANTITY_CONDITION = 1;
     private final Menu menu;
     private int quantity;
 
     public OrderMenu(Menu menu) {
         this.menu = menu;
         this.quantity = 0;
+    }
+
+    public boolean active() {
+        return this.quantity >= ACTIVE_QUANTITY_CONDITION;
     }
 
     public void addQuantity(int quantityToAdd) {
