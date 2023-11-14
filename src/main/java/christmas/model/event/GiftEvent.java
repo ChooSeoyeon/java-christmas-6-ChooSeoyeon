@@ -1,6 +1,7 @@
 package christmas.model.event;
 
 import christmas.model.order.Menu;
+import java.util.Arrays;
 
 public enum GiftEvent {
     NO_GIFT(0, null, "없음"),
@@ -17,12 +18,10 @@ public enum GiftEvent {
     }
 
     public static GiftEvent determineGiftBy(int orderTotalPrice) {
-        for (GiftEvent giftEvent : GiftEvent.values()) {
-            if (orderTotalPrice >= giftEvent.priceThreshold) {
-                return giftEvent;
-            }
-        }
-        return NO_GIFT;
+        return Arrays.stream(GiftEvent.values())
+                .filter(giftEvent -> orderTotalPrice >= giftEvent.priceThreshold)
+                .reduce((first, second) -> second)
+                .orElse(NO_GIFT);
     }
 
     public String getGiftDescription() {

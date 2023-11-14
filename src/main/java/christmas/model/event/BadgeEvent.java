@@ -1,5 +1,7 @@
 package christmas.model.event;
 
+import java.util.Arrays;
+
 public enum BadgeEvent {
     NO_BADGE(0, "없음"),
     STAR(5000, "별"),
@@ -15,11 +17,10 @@ public enum BadgeEvent {
     }
 
     public static String determineBadgeNameBy(int totalDiscountPrice) {
-        for (BadgeEvent badgeEvent : BadgeEvent.values()) {
-            if (totalDiscountPrice >= badgeEvent.priceThreshold) {
-                return badgeEvent.badgeName;
-            }
-        }
-        return NO_BADGE.badgeName;
+        return Arrays.stream(BadgeEvent.values())
+                .filter(badgeEvent -> totalDiscountPrice >= badgeEvent.priceThreshold)
+                .reduce((first, second) -> second)
+                .map(badgeEvent -> badgeEvent.badgeName)
+                .orElse(NO_BADGE.badgeName);
     }
 }
