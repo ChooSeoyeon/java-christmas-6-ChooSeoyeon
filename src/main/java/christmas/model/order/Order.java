@@ -42,6 +42,12 @@ public class Order {
                 .sum();
     }
 
+    public int countItemsByType(MenuType menuType) {
+        return orderMenus.stream()
+                .mapToInt(orderMenu -> orderMenu.contributeToTypeCount(menuType))
+                .sum();
+    }
+
     public void markMenusBy(List<OrderRequest> orderRequests) {
         validate(orderRequests);
         for (OrderRequest orderRequest : orderRequests) {

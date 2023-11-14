@@ -28,6 +28,13 @@ public class OrderMenu {
         return menu.getPrice() * quantity;
     }
 
+    public int contributeToTypeCount(MenuType menuType) {
+        if (this.menu.getMenuType().equals(menuType)) {
+            return quantity;
+        }
+        return 0;
+    }
+
     @Override
     public String toString() {
         return String.format("%s %d개", menu.getName(), quantity);
