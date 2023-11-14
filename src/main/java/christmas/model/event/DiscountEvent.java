@@ -14,7 +14,7 @@ public enum DiscountEvent {
         return 0;
     }),
     WEEKDAY_DISCOUNT("평일 할인", (order, date) -> {
-        if (date.getDayOfWeek().getValue() >= DayOfWeek.MONDAY.getValue() &&
+        if (date.getDayOfWeek().getValue() >= DayOfWeek.SUNDAY.getValue() &&
                 date.getDayOfWeek().getValue() <= DayOfWeek.THURSDAY.getValue()) {
             int dessertCount = order.countItemsByType(MenuType.DESSERT);
             return dessertCount * 2203;
@@ -36,15 +36,15 @@ public enum DiscountEvent {
     });
 
     private final String displayName;
-    private BiFunction<Order, LocalDate, Integer> discountFunction;
+    private final BiFunction<Order, LocalDate, Integer> discount;
 
     DiscountEvent(String displayName, BiFunction<Order, LocalDate, Integer> discountFunction) {
         this.displayName = displayName;
-        this.discountFunction = discountFunction;
+        this.discount = discountFunction;
     }
 
     public int applyDiscount(Order order, LocalDate date) {
-        return discountFunction.apply(order, date);
+        return discount.apply(order, date);
     }
 
     public String getDisplayName() {

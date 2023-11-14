@@ -6,17 +6,17 @@ public enum BadgeEvent {
     TREE(10000, "트리"),
     SANTA(20000, "산타");
 
-    private final int discountThreshold;
+    private final int priceThreshold;
     private final String badgeName;
 
     BadgeEvent(int discountThreshold, String badgeName) {
-        this.discountThreshold = discountThreshold;
+        this.priceThreshold = discountThreshold;
         this.badgeName = badgeName;
     }
 
-    public static String determineBadge(int totalDiscount) {
+    public static String determineBadgeNameBy(int totalDiscountPrice) {
         for (BadgeEvent badgeEvent : BadgeEvent.values()) {
-            if (totalDiscount >= badgeEvent.discountThreshold) {
+            if (totalDiscountPrice >= badgeEvent.priceThreshold) {
                 return badgeEvent.badgeName;
             }
         }

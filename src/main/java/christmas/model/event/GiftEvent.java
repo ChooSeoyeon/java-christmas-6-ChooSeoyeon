@@ -1,26 +1,24 @@
 package christmas.model.event;
 
 import christmas.model.order.Menu;
-import christmas.model.order.Order;
-import java.util.function.Predicate;
 
 public enum GiftEvent {
-    CHAMPAGNE_GIFT(Menu.CHAMPAGNE, "1개", order -> order.sumTotalPrice() >= 120000),
-    NO_GIFT(null, "없음", order -> true);
+    NO_GIFT(0, null, "없음"),
+    CHAMPAGNE_GIFT(120000, Menu.CHAMPAGNE, "1개");
 
+    private final int priceThreshold;
     private final Menu menu;
     private final String countDescription;
-    private final Predicate<Order> giftCondition;
 
-    GiftEvent(Menu menu, String countDescription, Predicate<Order> giftCondition) {
+    GiftEvent(int priceThreshold, Menu menu, String countDescription) {
+        this.priceThreshold = priceThreshold;
         this.menu = menu;
         this.countDescription = countDescription;
-        this.giftCondition = giftCondition;
     }
 
-    public static GiftEvent determineApplicableGift(Order order) {
+    public static GiftEvent determineGiftBy(int orderTotalPrice) {
         for (GiftEvent giftEvent : GiftEvent.values()) {
-            if (giftEvent.giftCondition.test(order)) {
+            if (orderTotalPrice >= giftEvent.priceThreshold) {
                 return giftEvent;
             }
         }
@@ -34,15 +32,10 @@ public enum GiftEvent {
         return menu.getName() + " " + countDescription;
     }
 
-    public Menu getMenu() {
-        return menu;
-    }
-
-    public String getMenuName() {
-        return menu.getName();
-    }
-
     public int getMenuPrice() {
+        if (this == NO_GIFT) {
+            return 0;
+        }
         return menu.getPrice();
     }
 }
