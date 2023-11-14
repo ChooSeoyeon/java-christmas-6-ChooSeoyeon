@@ -1,9 +1,9 @@
 package christmas;
 
 import camp.nextstep.edu.missionutils.Console;
-import christmas.model.event.BadgeEvent;
-import christmas.model.event.DiscountEvent;
-import christmas.model.event.GiftEvent;
+import christmas.model.event.Event;
+import christmas.model.event.dto.DiscountSummary;
+import christmas.model.event.dto.EventResult;
 import christmas.model.order.Order;
 import christmas.model.order.OrderMenu;
 import christmas.model.order.OrderRequest;
@@ -11,6 +11,7 @@ import christmas.model.order.OrderResult;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Application {
@@ -35,46 +36,40 @@ public class Application {
         Integer orderTotalPrice = orderResult.orderTotalPrice();
         System.out.println("12월 " + inputDate + "일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!");
 
-        System.out.println();
-        System.out.println("<주문 메뉴>");
+        System.out.println("\n<주문 메뉴>");
         System.out.println(orderMenus.stream().map(Object::toString).collect(Collectors.joining("\n")));
 
-        System.out.println();
-        System.out.println("<할인 전 총주문 금액>");
+        System.out.println("\n<할인 전 총주문 금액>");
         System.out.println(String.format("%,d", orderTotalPrice) + "원");
 
-        int totalDiscount = 0;
-        for (DiscountEvent discountEvent : DiscountEvent.values()) {
-            int discount = discountEvent.applyDiscount(order, date);
-            totalDiscount += discount;
-        }
+        Event event = new Event();
+        EventResult eventResult = event.applyTo(order, date);
 
-        GiftEvent applicableGift = GiftEvent.determineApplicableGift(order);
-
-        System.out.println("<증정 메뉴>");
-        System.out.println(applicableGift.getGiftDescription());
-
-        String badge = BadgeEvent.determineBadge(totalDiscount);
-        int finalPrice = order.sumTotalPrice() - totalDiscount;
+        System.out.println("\n<증정 메뉴>");
+        System.out.println(eventResult.gift().description());
 
         System.out.println("\n<혜택 내역>");
-        for (DiscountEvent discountEvent : DiscountEvent.values()) {
-            int discount = discountEvent.applyDiscount(order, date);
-            if (discount > 0) {
-                System.out.println(discountEvent.getDisplayName() + ": -" + discount + "원");
-            }
-        }
-        if (applicableGift != GiftEvent.NO_GIFT) {
-            System.out.println("증정 이벤트: -" + applicableGift.getMenuPrice() + "원");
+        Optional<DiscountSummary> optionalFirstDiscount = eventResult.discounts().stream().findFirst();
+        optionalFirstDiscount.ifPresentOrElse(
+                firstDiscount -> eventResult.discounts().forEach(discountSummary ->
+                        System.out.println(discountSummary.description() + ": -" + discountSummary.price() + "원")),
+                () -> System.out.println("없음")
+        );
+
+        if (eventResult.gift().price() != 0) {
+            System.out.println("증정 이벤트: -" + eventResult.gift().price() + "원");
         }
 
-        System.out.println("<총혜택 금액>");
-        System.out.println("-" + totalDiscount + "원");
+        System.out.println("\n<총혜택 금액>");
+        if (eventResult.payment().totalBenefitPrice() != 0) {
+            System.out.print("-");
+        }
+        System.out.println(eventResult.payment().totalBenefitPrice() + "원");
 
         System.out.println("\n<할인 후 예상 결제 금액>");
-        System.out.println(finalPrice + "원");
+        System.out.println(eventResult.payment().finalPayment() + "원");
 
         System.out.println("\n<12월 이벤트 배지>");
-        System.out.println(badge);
+        System.out.println(eventResult.payment().badgeName());
     }
 }
