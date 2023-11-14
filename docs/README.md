@@ -87,11 +87,11 @@
 
 ## 🔑 Exception
 
-### CalendarDateException
+### PlanDateException
 
 - [x]  입력값인 `예상 방문 날짜`와 관련된 예외를 한데 모아 처리한다
 
-### MenuOrderException
+### OrderException
 
 - [x]  입력값인 `주문 메뉴 및 개수`와 관련된 예외를 한데 모아 처리한다
 

@@ -1,9 +1,9 @@
 package christmas.model.order;
 
-import christmas.exception.MenuOrderException.DrinkOnlyOrderException;
-import christmas.exception.MenuOrderException.DuplicateMenuException;
-import christmas.exception.MenuOrderException.LackingMenuQuantityException;
-import christmas.exception.MenuOrderException.OverTotalMenuQuantityException;
+import christmas.exception.OrderException.DrinkOnlyOrderException;
+import christmas.exception.OrderException.DuplicateMenuException;
+import christmas.exception.OrderException.LackingMenuQuantityException;
+import christmas.exception.OrderException.OverTotalMenuQuantityException;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;

@@ -1,6 +1,6 @@
 package christmas.model.order;
 
-import christmas.exception.MenuOrderException.NotFoundMenuException;
+import christmas.exception.OrderException.NotFoundMenuException;
 
 public record OrderRequest(Menu menu, int quantity) {
     public static OrderRequest of(String menuName, int quantity) {
