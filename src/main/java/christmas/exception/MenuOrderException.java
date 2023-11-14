@@ -16,12 +16,12 @@ public class MenuOrderException extends IllegalArgumentException {
     public static class DuplicateMenuException extends MenuOrderException {
     }
 
-    public static class BeverageOnlyOrderException extends MenuOrderException {
+    public static class DrinkOnlyOrderException extends MenuOrderException {
     }
 
-    public static class LackingMenuCountException extends MenuOrderException {
+    public static class LackingMenuQuantityException extends MenuOrderException {
     }
 
-    public static class OverTotalMenuCountException extends MenuOrderException {
+    public static class OverTotalMenuQuantityException extends MenuOrderException {
     }
 }

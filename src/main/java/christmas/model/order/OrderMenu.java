@@ -11,8 +11,12 @@ public class OrderMenu {
         this.quantity = 0;
     }
 
-    public void countMenuItem() {
-        quantity++;
+    public void addQuantity(int quantityToAdd) {
+        this.quantity += quantityToAdd;
+    }
+
+    public boolean isMenuEqual(Menu otherMenu) {
+        return menu.equals(otherMenu);
     }
 
     public int sumMenuPrice() {
