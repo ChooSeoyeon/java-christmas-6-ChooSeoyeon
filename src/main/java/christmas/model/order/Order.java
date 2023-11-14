@@ -1,5 +1,6 @@
 package christmas.model.order;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -14,6 +15,16 @@ public class Order {
     }
 
     public List<OrderMenu> getOrderMenus() {
-        return orderMenus;
+        return Collections.unmodifiableList(orderMenus);
+    }
+
+    public OrderResult createOrderResult() {
+        return OrderResult.create(this);
+    }
+
+    public int sumTotalPrice() {
+        return orderMenus.stream()
+                .mapToInt(OrderMenu::sumMenuPrice)
+                .sum();
     }
 }

@@ -15,7 +15,7 @@ public class OrderMenu {
         quantity++;
     }
 
-    public int getTotalPrice() {
+    public int sumMenuPrice() {
         return menu.getPrice() * quantity;
     }
 
