@@ -10,6 +10,7 @@ public class OutputView {
     private static final String ORDER_MENUS_ANNOUNCE = "\n<주문 메뉴>";
     private static final String ORDER_TOTAL_PRICE_ANNOUNCE = "\n<할인 전 총주문 금액>";
     private static final String GIFT_ANNOUNCE = "\n<증정 메뉴>";
+    private static final String BENEFIT_LIST_ANNOUNCE = "\n<혜택 내역>";
 
     public void printEventPlannerStart() {
         System.out.println(EVENT_PLANNER_START_ANNOUNCE);
@@ -36,10 +37,16 @@ public class OutputView {
 
     public void printEventResult(EventResult eventResult) {
         printGift(eventResult);
+        printBenefitList(eventResult);
     }
 
     private void printGift(EventResult eventResult) {
         System.out.println(GIFT_ANNOUNCE);
         System.out.println(OutputFormatter.formatGift(eventResult));
+    }
+
+    private void printBenefitList(EventResult eventResult) {
+        System.out.println(BENEFIT_LIST_ANNOUNCE);
+        System.out.println(OutputFormatter.formatBenefitList(eventResult));
     }
 }

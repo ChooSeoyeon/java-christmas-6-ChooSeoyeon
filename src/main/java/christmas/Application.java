@@ -1,7 +1,6 @@
 package christmas;
 
 import christmas.model.event.Event;
-import christmas.model.event.dto.DiscountSummary;
 import christmas.model.event.dto.EventResult;
 import christmas.model.order.Order;
 import christmas.model.order.dto.OrderRequest;
@@ -10,7 +9,6 @@ import christmas.view.InputView;
 import christmas.view.OutputView;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
 public class Application {
     public static void main(String[] args) {
@@ -31,18 +29,6 @@ public class Application {
 
         EventResult eventResult = event.applyTo(order, date);
         outputView.printEventResult(eventResult);
-        
-        System.out.println("\n<혜택 내역>");
-        Optional<DiscountSummary> optionalFirstDiscount = eventResult.discounts().stream().findFirst();
-        optionalFirstDiscount.ifPresentOrElse(
-                firstDiscount -> eventResult.discounts().forEach(discountSummary ->
-                        System.out.println(discountSummary.description() + ": -" + discountSummary.price() + "원")),
-                () -> System.out.println("없음")
-        );
-
-        if (eventResult.gift().price() != 0) {
-            System.out.println("증정 이벤트: -" + eventResult.gift().price() + "원");
-        }
 
         System.out.println("\n<총혜택 금액>");
         if (eventResult.payment().totalBenefitPrice() != 0) {
