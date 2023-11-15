@@ -18,6 +18,7 @@ public class Application {
         InputView inputView = new InputView();
         OutputView outputView = new OutputView();
         Order order = new Order();
+        Event event = new Event();
 
         outputView.printEventPlannerStart();
         LocalDate date = inputView.readDate();
@@ -25,15 +26,12 @@ public class Application {
         List<OrderRequest> orderRequests = inputView.readOrderRequests();
         order.markMenusBy(orderRequests);
         OrderResult orderResult = order.createOrderResult();
-
-        Event event = new Event();
-        EventResult eventResult = event.applyTo(order, date);
         outputView.printEventBenefitStartWith(date);
         outputView.printOrderResult(orderResult);
 
-        System.out.println("\n<증정 메뉴>");
-        System.out.println(eventResult.gift().description());
-
+        EventResult eventResult = event.applyTo(order, date);
+        outputView.printEventResult(eventResult);
+        
         System.out.println("\n<혜택 내역>");
         Optional<DiscountSummary> optionalFirstDiscount = eventResult.discounts().stream().findFirst();
         optionalFirstDiscount.ifPresentOrElse(

@@ -1,5 +1,6 @@
 package christmas.view;
 
+import christmas.model.event.dto.EventResult;
 import christmas.model.order.dto.OrderResult;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
@@ -23,5 +24,9 @@ public class OutputFormatter {
 
     public static String formatOrderTotalPrice(OrderResult orderResult) {
         return PRICE_FORMAT.format(orderResult.orderTotalPrice()) + PRICE_SUFFIX;
+    }
+
+    public static String formatGift(EventResult eventResult) {
+        return eventResult.gift().description();
     }
 }
