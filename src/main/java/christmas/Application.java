@@ -30,12 +30,6 @@ public class Application {
         EventResult eventResult = event.applyTo(order, date);
         outputView.printEventResult(eventResult);
 
-        System.out.println("\n<총혜택 금액>");
-        if (eventResult.payment().totalBenefitPrice() != 0) {
-            System.out.print("-");
-        }
-        System.out.println(eventResult.payment().totalBenefitPrice() + "원");
-
         System.out.println("\n<할인 후 예상 결제 금액>");
         System.out.println(eventResult.payment().finalPayment() + "원");
 

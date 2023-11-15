@@ -11,6 +11,7 @@ public class OutputView {
     private static final String ORDER_TOTAL_PRICE_ANNOUNCE = "\n<할인 전 총주문 금액>";
     private static final String GIFT_ANNOUNCE = "\n<증정 메뉴>";
     private static final String BENEFIT_LIST_ANNOUNCE = "\n<혜택 내역>";
+    private static final String TOTAL_BENEFIT_PRICE = "\n<총혜택 금액>";
 
     public void printEventPlannerStart() {
         System.out.println(EVENT_PLANNER_START_ANNOUNCE);
@@ -38,6 +39,7 @@ public class OutputView {
     public void printEventResult(EventResult eventResult) {
         printGift(eventResult);
         printBenefitList(eventResult);
+        printTotalBenefitPrice(eventResult);
     }
 
     private void printGift(EventResult eventResult) {
@@ -48,5 +50,10 @@ public class OutputView {
     private void printBenefitList(EventResult eventResult) {
         System.out.println(BENEFIT_LIST_ANNOUNCE);
         System.out.println(OutputFormatter.formatBenefitList(eventResult));
+    }
+
+    private void printTotalBenefitPrice(EventResult eventResult) {
+        System.out.println(TOTAL_BENEFIT_PRICE);
+        System.out.println(OutputFormatter.formatTotalBenefitPrice(eventResult));
     }
 }

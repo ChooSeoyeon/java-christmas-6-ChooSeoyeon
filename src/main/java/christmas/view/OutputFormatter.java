@@ -12,13 +12,14 @@ import java.util.stream.Collectors;
 
 public class OutputFormatter {
     private static final String LIST_DELIMITER = "\n";
-    private static final DecimalFormat PRICE_FORMAT = new DecimalFormat("#,###");
-    private static final String PRICE_SUFFIX = "원";
+    private static final DecimalFormat PRICE_FORMAT = new DecimalFormat("#,###'원'");
+    private static final int PRICE_VALID_CONDITION = 0;
+    private static final String PRICE_PREFIX = "-";
+    private static final String BENEFIT_PREFIX = ": -";
     private static final String DISCOUNT_EMPTY_FORMAT = "없음\n";
     private static final String GIFT_EMPTY_FORMAT = "";
-    private static final int GIFT_EMPTY_CONDITION = 0;
-    private static final String GIFT_DESCRIPTION_FORMAT = "증정 이벤트";
-    private static final String BENEFIT_PREFIX = ": -";
+    private static final String GIFT_DESCRIPTION_FORMAT = "\n증정 이벤트";
+
 
     public static String formatEventBenefitStartWithDate(String startAnnounce, LocalDate date) {
         int dayOfMonth = date.getDayOfMonth();
@@ -32,7 +33,7 @@ public class OutputFormatter {
     }
 
     public static String formatOrderTotalPrice(OrderResult orderResult) {
-        return PRICE_FORMAT.format(orderResult.orderTotalPrice()) + PRICE_SUFFIX;
+        return PRICE_FORMAT.format(orderResult.orderTotalPrice());
     }
 
     public static String formatGift(EventResult eventResult) {
@@ -50,21 +51,28 @@ public class OutputFormatter {
         return discounts.stream()
                 .map(discount -> discount.description()
                         + BENEFIT_PREFIX
-                        + discount.price()
-                        + PRICE_SUFFIX
-                        + LIST_DELIMITER)
-                .collect(Collectors.joining());
+                        + PRICE_FORMAT.format(discount.price()))
+                .collect(Collectors.joining(LIST_DELIMITER));
     }
 
     private static String formatGiftBenefit(GiftSummary gift) {
-        if (gift.price() == GIFT_EMPTY_CONDITION) {
+        if (gift.price() == PRICE_VALID_CONDITION) {
             return GIFT_EMPTY_FORMAT;
         }
         return Optional.of(gift)
                 .map(g -> GIFT_DESCRIPTION_FORMAT
                         + BENEFIT_PREFIX
-                        + g.price()
-                        + PRICE_SUFFIX)
+                        + PRICE_FORMAT.format(g.price()))
                 .orElse(GIFT_EMPTY_FORMAT);
+    }
+
+    public static String formatTotalBenefitPrice(EventResult eventResult) {
+        StringBuilder builder = new StringBuilder();
+        int totalBenefitPrice = eventResult.payment().totalBenefitPrice();
+        if (totalBenefitPrice != PRICE_VALID_CONDITION) {
+            builder.append(PRICE_PREFIX);
+        }
+        builder.append(PRICE_FORMAT.format(totalBenefitPrice));
+        return builder.toString();
     }
 }
