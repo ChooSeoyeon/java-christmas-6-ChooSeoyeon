@@ -8,8 +8,8 @@ import christmas.model.order.Order;
 import christmas.model.order.OrderMenu;
 import christmas.model.order.dto.OrderRequest;
 import christmas.model.order.dto.OrderResult;
+import christmas.view.InputConverter;
 import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -24,10 +24,7 @@ public class Application {
 
         System.out.println("주문하실 메뉴를 메뉴와 개수를 알려 주세요. (e.g. 해산물파스타-2,레드와인-1,초코케이크-1)");
         String inputOrder = Console.readLine();
-        List<String> inputOrderMenus = Arrays.stream(inputOrder.split(",")).toList();
-        List<OrderRequest> orderRequests = inputOrderMenus.stream()
-                .map(OrderRequest::createFromInput)
-                .toList();
+        List<OrderRequest> orderRequests = InputConverter.convertInputOrderRequestsToListOrderRequests(inputOrder);
         Order order = new Order();
         order.markMenusBy(orderRequests);
 

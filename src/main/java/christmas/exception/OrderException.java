@@ -10,6 +10,12 @@ public class OrderException extends IllegalArgumentException {
     public static class InvalidOrderFormatException extends OrderException {
     }
 
+    public static class EmptyMenuNameException extends OrderException {
+    }
+
+    public static class NonIntQuantityException extends OrderException {
+    }
+
     public static class NotFoundMenuException extends OrderException {
     }
 

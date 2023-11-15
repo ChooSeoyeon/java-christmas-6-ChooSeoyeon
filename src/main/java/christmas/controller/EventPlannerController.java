@@ -5,19 +5,16 @@ import christmas.model.event.dto.EventResult;
 import christmas.model.order.Order;
 import christmas.model.order.dto.OrderRequest;
 import christmas.model.order.dto.OrderResult;
-import christmas.view.InputView;
 import java.time.LocalDate;
 import java.util.List;
 
 public class EventPlannerController {
     private final Order order;
     private final Event event;
-    private final InputView inputView;
 
-    public EventPlannerController(final InputView inputView) {
+    public EventPlannerController() {
         this.order = new Order();
         this.event = new Event();
-        this.inputView = inputView;
     }
 
     public void plan() {
