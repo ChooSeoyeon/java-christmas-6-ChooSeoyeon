@@ -9,6 +9,7 @@ import christmas.view.InputView;
 import christmas.view.OutputView;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.function.Supplier;
 
 public class EventPlannerController {
     private final InputView inputView;
@@ -31,18 +32,31 @@ public class EventPlannerController {
 
     private LocalDate planDate() {
         outputView.printEventPlannerStart();
-        return inputView.readDate();
+        return tryCatchTemplate(inputView::readDate);
     }
 
     private void planOrder(LocalDate visitDate) {
-        List<OrderRequest> orderRequests = inputView.readOrderRequests();
-        OrderResult orderResult = order.markMenusBy(orderRequests);
+        OrderResult orderResult = tryCatchTemplate(this::processOrder);
         outputView.printEventBenefitStartWith(visitDate);
         outputView.printOrderResult(orderResult);
+    }
+
+    private OrderResult processOrder() {
+        List<OrderRequest> orderRequests = inputView.readOrderRequests();
+        return order.markMenusBy(orderRequests);
     }
 
     private void applyEventToOrder(LocalDate visitDate) {
         EventResult eventResult = event.applyTo(order, visitDate);
         outputView.printEventResult(eventResult);
+    }
+
+    private <T> T tryCatchTemplate(Supplier<T> action) {
+        try {
+            return action.get();
+        } catch (IllegalArgumentException e) {
+            outputView.printErrorMessage(e.getMessage());
+            return tryCatchTemplate(action);
+        }
     }
 }

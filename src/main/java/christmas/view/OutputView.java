@@ -70,4 +70,8 @@ public class OutputView {
         System.out.println(BADGE_ANNOUNCE);
         System.out.println(eventResult.payment().badgeName());
     }
+
+    public void printErrorMessage(String message) {
+        System.out.println(message);
+    }
 }
