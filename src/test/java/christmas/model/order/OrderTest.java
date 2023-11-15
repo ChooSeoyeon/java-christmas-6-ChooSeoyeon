@@ -17,6 +17,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 public class OrderTest {
     private Order order;
     private List<OrderRequest> defaultOrderRequests;
+    private int defaultTotalPrice;
 
     @BeforeEach
     void setUp() {
@@ -25,6 +26,7 @@ public class OrderTest {
                 new OrderRequest(Menu.MUSHROOM_SOUP, 2),
                 new OrderRequest(Menu.BBQ_RIBS, 3)
         );
+        defaultTotalPrice = Menu.MUSHROOM_SOUP.getPrice() * 2 + Menu.BBQ_RIBS.getPrice() * 3;
     }
 
     @Test
@@ -35,6 +37,23 @@ public class OrderTest {
                 .toList();
 
         assertThat(order.listAllMenus().toString()).isEqualTo(emptyOrderMenus.toString());
+    }
+
+    @Test
+    void 주문한_메뉴의_총_가격을_합산할_수_있다() {
+        order.markMenusBy(defaultOrderRequests);
+
+        assertThat(order.sumTotalPrice()).isEqualTo(defaultTotalPrice);
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "APPETIZER, 2",
+            "MAIN, 3"
+    })
+    void 전체_주문된_메뉴를_수합할_때_메뉴의_타입별로_총_개수를_수합할_수_있다(MenuType menuType, int expectedQuantity) {
+        order.markMenusBy(defaultOrderRequests);
+        assertThat(order.countItemsByType(menuType)).isEqualTo(expectedQuantity);
     }
 
     @ParameterizedTest
@@ -50,18 +69,16 @@ public class OrderTest {
                 .anyMatch(orderMenu -> orderMenu.toString().equals(expectedResult));
     }
 
-
     @Test
     void 주문_결과_생성시_주문_메뉴와_할인_전_총주문_금액을_반환한다() {
         order.markMenusBy(defaultOrderRequests);
 
         OrderResult orderResult = order.createOrderResult();
 
-        int expectedTotalPrice = Menu.MUSHROOM_SOUP.getPrice() * 2 + Menu.BBQ_RIBS.getPrice() * 3;
         assertThat(orderResult.orderMenus())
                 .containsExactlyInAnyOrderElementsOf(order.extractActiveOrderMenus());
         assertThat(orderResult.orderTotalPrice())
-                .isEqualTo(expectedTotalPrice);
+                .isEqualTo(defaultTotalPrice);
     }
 
     @Test
