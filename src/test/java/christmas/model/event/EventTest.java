@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import christmas.model.event.dto.EventResult;
 import christmas.model.order.Menu;
 import christmas.model.order.Order;
-import christmas.model.order.OrderRequest;
+import christmas.model.order.dto.OrderRequest;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;

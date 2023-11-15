@@ -4,6 +4,8 @@ import christmas.exception.OrderException.DrinkOnlyOrderException;
 import christmas.exception.OrderException.DuplicateMenuException;
 import christmas.exception.OrderException.LackingMenuQuantityException;
 import christmas.exception.OrderException.OverTotalMenuQuantityException;
+import christmas.model.order.dto.OrderRequest;
+import christmas.model.order.dto.OrderResult;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;

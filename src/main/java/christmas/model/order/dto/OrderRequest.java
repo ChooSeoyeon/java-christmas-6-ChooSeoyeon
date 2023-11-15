@@ -1,6 +1,7 @@
-package christmas.model.order;
+package christmas.model.order.dto;
 
 import christmas.exception.OrderException.NotFoundMenuException;
+import christmas.model.order.Menu;
 import java.util.Arrays;
 import java.util.List;
 

@@ -3,6 +3,8 @@ package christmas.model.order;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import christmas.model.order.dto.OrderRequest;
+import christmas.model.order.dto.OrderResult;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;

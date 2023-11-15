@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import christmas.model.order.Menu;
 import christmas.model.order.Order;
-import christmas.model.order.OrderRequest;
+import christmas.model.order.dto.OrderRequest;
 import java.time.LocalDate;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
