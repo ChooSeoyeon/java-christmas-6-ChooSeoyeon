@@ -50,11 +50,12 @@ public class Order {
                 .sum();
     }
 
-    public void markMenusBy(List<OrderRequest> orderRequests) {
+    public OrderResult markMenusBy(List<OrderRequest> orderRequests) {
         validate(orderRequests);
         for (OrderRequest orderRequest : orderRequests) {
             markMenu(orderRequest.menu(), orderRequest.quantity());
         }
+        return createOrderResult();
     }
 
     private void markMenu(Menu menu, int quantity) {
