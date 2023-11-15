@@ -3,6 +3,7 @@ package christmas.view;
 import christmas.exception.OrderException.EmptyMenuNameException;
 import christmas.exception.OrderException.InvalidOrderFormatException;
 import christmas.exception.OrderException.NonIntQuantityException;
+import christmas.exception.PlanDateException.DateInPastException;
 import christmas.exception.PlanDateException.InvalidDateFormatException;
 import christmas.exception.PlanDateException.OutOfRangeDateException;
 import christmas.model.order.dto.OrderRequest;
@@ -14,12 +15,16 @@ import java.util.List;
 public class InputConverter {
     private static final int YEAR = 2023;
     private static final int MONTH = 12;
+    private static final int TEMP_MONTH = 11;
+    private static final int TEMP_DATE = 20;
     private static final String ORDER_DELIMITER = ",";
     private static final String MENU_DELIMITER = "-";
 
     public static LocalDate convertInputDateToLocalDate(String inputDate) {
         int date = parseInputDateToIntDate(inputDate);
-        return parseIntDateToLocalDate(date);
+        LocalDate localDate = parseIntDateToLocalDate(date);
+        checkDateInPast(localDate);
+        return localDate;
     }
 
     private static int parseInputDateToIntDate(String inputDate) {
@@ -35,6 +40,13 @@ public class InputConverter {
             return LocalDate.of(YEAR, MONTH, date);
         } catch (DateTimeException exception) {
             throw new OutOfRangeDateException();
+        }
+    }
+
+    private static void checkDateInPast(LocalDate date) {
+        LocalDate today = LocalDate.of(YEAR, TEMP_MONTH, TEMP_DATE);
+        if (date.isBefore(today)) {
+            throw new DateInPastException();
         }
     }
 
