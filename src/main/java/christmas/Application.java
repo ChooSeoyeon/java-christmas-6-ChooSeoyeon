@@ -31,9 +31,6 @@ public class Application {
         outputView.printEventBenefitStartWith(Integer.parseInt(String.valueOf(date.getDayOfMonth())));
         outputView.printOrderResult(orderResult);
 
-        System.out.println("\n<할인 전 총주문 금액>");
-        System.out.println(String.format("%,d", orderTotalPrice) + "원");
-
         Event event = new Event();
         EventResult eventResult = event.applyTo(order, date);
 
