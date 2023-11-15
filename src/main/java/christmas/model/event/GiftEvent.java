@@ -5,7 +5,7 @@ import java.util.Arrays;
 
 public enum GiftEvent {
     NO_GIFT(0, null, "없음"),
-    CHAMPAGNE_GIFT(120000, Menu.CHAMPAGNE, "1개");
+    CHAMPAGNE_GIFT(120_000, Menu.CHAMPAGNE, "1개");
 
     private final int priceThreshold;
     private final Menu menu;
