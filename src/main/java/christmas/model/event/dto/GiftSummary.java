@@ -8,4 +8,9 @@ public record GiftSummary(String description, int price) {
         int price = giftEvent.getMenuPrice();
         return new GiftSummary(description, price);
     }
+
+    public static GiftSummary createEmpty() {
+        GiftEvent giftEvent = GiftEvent.NO_GIFT;
+        return create(giftEvent);
+    }
 }

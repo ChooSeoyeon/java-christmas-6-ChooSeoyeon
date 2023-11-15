@@ -16,11 +16,15 @@ public enum BadgeEvent {
         this.badgeName = badgeName;
     }
 
-    public static String determineBadgeNameBy(int totalDiscountPrice) {
+    public static String determineBadgeNameBy(int totalBenefitPrice) {
         return Arrays.stream(BadgeEvent.values())
-                .filter(badgeEvent -> totalDiscountPrice >= badgeEvent.priceThreshold)
+                .filter(badgeEvent -> totalBenefitPrice >= badgeEvent.priceThreshold)
                 .reduce((first, second) -> second)
                 .map(badgeEvent -> badgeEvent.badgeName)
                 .orElse(NO_BADGE.badgeName);
+    }
+
+    public static String defaultBadgeName() {
+        return NO_BADGE.badgeName;
     }
 }

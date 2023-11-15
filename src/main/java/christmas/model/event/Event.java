@@ -10,12 +10,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Event {
+    private static final int MINIMUM_PRICE_FOR_EVENT = 10_000;
+
     public EventResult applyTo(Order order, LocalDate date) {
+        if (!canApply(order)) {
+            return EventResult.createEmpty();
+        }
         GiftSummary gift = applyGiftEvent(order);
         List<DiscountSummary> discounts = applyDiscountEvent(order, date);
         PaymentSummary payment = summarizeBenefit(order, gift, discounts);
-
         return new EventResult(gift, discounts, payment);
+    }
+
+    private boolean canApply(Order order) {
+        return order.sumTotalPrice() >= MINIMUM_PRICE_FOR_EVENT;
     }
 
     private GiftSummary applyGiftEvent(Order order) {

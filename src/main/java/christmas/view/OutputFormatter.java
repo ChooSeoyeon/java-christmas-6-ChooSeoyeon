@@ -16,7 +16,7 @@ public class OutputFormatter {
     private static final int PRICE_VALID_CONDITION = 0;
     private static final String PRICE_PREFIX = "-";
     private static final String BENEFIT_PREFIX = ": -";
-    private static final String DISCOUNT_EMPTY_FORMAT = "없음\n";
+    private static final String DISCOUNT_EMPTY_FORMAT = "없음";
     private static final String GIFT_EMPTY_FORMAT = "";
     private static final String GIFT_DESCRIPTION_FORMAT = "\n증정 이벤트";
 
