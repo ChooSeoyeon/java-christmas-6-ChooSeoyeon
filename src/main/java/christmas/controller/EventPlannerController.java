@@ -32,11 +32,11 @@ public class EventPlannerController {
 
     private LocalDate planDate() {
         outputView.printEventPlannerStart();
-        return tryCatchTemplate(inputView::readDate);
+        return repeatUntilSuccess(inputView::readDate);
     }
 
     private void planOrder(LocalDate visitDate) {
-        OrderResult orderResult = tryCatchTemplate(this::processOrder);
+        OrderResult orderResult = repeatUntilSuccess(this::processOrder);
         outputView.printEventBenefitStartWith(visitDate);
         outputView.printOrderResult(orderResult);
     }
@@ -51,12 +51,13 @@ public class EventPlannerController {
         outputView.printEventResult(eventResult);
     }
 
-    private <T> T tryCatchTemplate(Supplier<T> action) {
-        try {
-            return action.get();
-        } catch (IllegalArgumentException e) {
-            outputView.printErrorMessage(e.getMessage());
-            return tryCatchTemplate(action);
+    private <T> T repeatUntilSuccess(Supplier<T> supplier) {
+        while (true) {
+            try {
+                return supplier.get();
+            } catch (IllegalArgumentException e) {
+                outputView.printErrorMessage(e.getMessage());
+            }
         }
     }
 }
