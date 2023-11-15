@@ -26,13 +26,10 @@ public class Application {
         order.markMenusBy(orderRequests);
         OrderResult orderResult = order.createOrderResult();
 
-        Integer orderTotalPrice = orderResult.orderTotalPrice();
-
-        outputView.printEventBenefitStartWith(Integer.parseInt(String.valueOf(date.getDayOfMonth())));
-        outputView.printOrderResult(orderResult);
-
         Event event = new Event();
         EventResult eventResult = event.applyTo(order, date);
+        outputView.printEventBenefitStartWith(date);
+        outputView.printOrderResult(orderResult);
 
         System.out.println("\n<증정 메뉴>");
         System.out.println(eventResult.gift().description());

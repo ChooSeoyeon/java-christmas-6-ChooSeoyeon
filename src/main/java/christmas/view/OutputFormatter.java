@@ -2,12 +2,18 @@ package christmas.view;
 
 import christmas.model.order.dto.OrderResult;
 import java.text.DecimalFormat;
+import java.time.LocalDate;
 import java.util.stream.Collectors;
 
 public class OutputFormatter {
     private static final String ORDER_MENUS_DELIMITER = "\n";
     private static final DecimalFormat PRICE_FORMAT = new DecimalFormat("#,###");
     private static final String PRICE_SUFFIX = "원";
+
+    public static String formatEventBenefitStartWithDate(String startAnnounce, LocalDate date) {
+        int dayOfMonth = date.getDayOfMonth();
+        return String.format(startAnnounce, dayOfMonth);
+    }
 
     public static String formatOrderMenus(OrderResult orderResult) {
         return orderResult.orderMenus().stream()
