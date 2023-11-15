@@ -29,11 +29,5 @@ public class Application {
 
         EventResult eventResult = event.applyTo(order, date);
         outputView.printEventResult(eventResult);
-
-        System.out.println("\n<할인 후 예상 결제 금액>");
-        System.out.println(eventResult.payment().finalPayment() + "원");
-
-        System.out.println("\n<12월 이벤트 배지>");
-        System.out.println(eventResult.payment().badgeName());
     }
 }

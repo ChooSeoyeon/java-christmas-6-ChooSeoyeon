@@ -11,7 +11,9 @@ public class OutputView {
     private static final String ORDER_TOTAL_PRICE_ANNOUNCE = "\n<할인 전 총주문 금액>";
     private static final String GIFT_ANNOUNCE = "\n<증정 메뉴>";
     private static final String BENEFIT_LIST_ANNOUNCE = "\n<혜택 내역>";
-    private static final String TOTAL_BENEFIT_PRICE = "\n<총혜택 금액>";
+    private static final String TOTAL_BENEFIT_PRICE_ANNOUNCE = "\n<총혜택 금액>";
+    private static final String FINAL_PAYMENT_ANNOUNCE = "\n<할인 후 예상 결제 금액>";
+    private static final String BADGE_ANNOUNCE = "\n<12월 이벤트 배지>";
 
     public void printEventPlannerStart() {
         System.out.println(EVENT_PLANNER_START_ANNOUNCE);
@@ -40,11 +42,13 @@ public class OutputView {
         printGift(eventResult);
         printBenefitList(eventResult);
         printTotalBenefitPrice(eventResult);
+        printFinalPayment(eventResult);
+        printBadge(eventResult);
     }
 
     private void printGift(EventResult eventResult) {
         System.out.println(GIFT_ANNOUNCE);
-        System.out.println(OutputFormatter.formatGift(eventResult));
+        System.out.println(eventResult.gift().description());
     }
 
     private void printBenefitList(EventResult eventResult) {
@@ -53,7 +57,17 @@ public class OutputView {
     }
 
     private void printTotalBenefitPrice(EventResult eventResult) {
-        System.out.println(TOTAL_BENEFIT_PRICE);
+        System.out.println(TOTAL_BENEFIT_PRICE_ANNOUNCE);
         System.out.println(OutputFormatter.formatTotalBenefitPrice(eventResult));
+    }
+
+    private void printFinalPayment(EventResult eventResult) {
+        System.out.println(FINAL_PAYMENT_ANNOUNCE);
+        System.out.println(OutputFormatter.formatFinalPayment(eventResult));
+    }
+
+    private void printBadge(EventResult eventResult) {
+        System.out.println(BADGE_ANNOUNCE);
+        System.out.println(eventResult.payment().badgeName());
     }
 }

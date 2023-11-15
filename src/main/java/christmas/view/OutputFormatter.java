@@ -36,10 +36,6 @@ public class OutputFormatter {
         return PRICE_FORMAT.format(orderResult.orderTotalPrice());
     }
 
-    public static String formatGift(EventResult eventResult) {
-        return eventResult.gift().description();
-    }
-
     public static String formatBenefitList(EventResult eventResult) {
         return formatDiscountBenefit(eventResult.discounts()) + formatGiftBenefit(eventResult.gift());
     }
@@ -74,5 +70,9 @@ public class OutputFormatter {
         }
         builder.append(PRICE_FORMAT.format(totalBenefitPrice));
         return builder.toString();
+    }
+
+    public static String formatFinalPayment(EventResult eventResult) {
+        return PRICE_FORMAT.format(eventResult.payment().finalPayment());
     }
 }
